@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        label 'slave1'
+    }
     
     environment {
         DOCKER_HUB_REPO = "shuchitha/hello-world"
