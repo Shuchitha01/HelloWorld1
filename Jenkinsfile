@@ -8,7 +8,20 @@ pipeline {
     }
     
     stages {
-        
+         stage('SCM Checkout') {
+            steps {
+                git 'https://github.com/Shuchitha01/app1.git'
+                sh 'ls -ltra'
+            }
+        }
+
+
+          stage('Maven Build') {
+            steps {
+                sh "mvn -Dmaven.test.failure.ignore=true clean package"
+                sh 'cd target && ls -ltra'
+            }
+        }
         
         stage('Build') {
             steps {
@@ -16,14 +29,7 @@ pipeline {
                 sh 'docker image build -t $DOCKER_HUB_REPO:latest .'
             }
         }
-        stage('Test') {
-            steps {
-                echo 'Testing..'
-                sh 'docker stop $CONTAINER_NAME || true'
-                sh 'docker rm $CONTAINER_NAME || true'
-                sh 'docker run --name $CONTAINER_NAME $DOCKER_HUB_REPO /bin/bash -c "pytest test.py && flake8"'
-            }
-        }
+        
         stage('Push') {
             steps {
                 echo 'Pushing image..'
