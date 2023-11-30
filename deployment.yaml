@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: helloworld-deployment # name of the deployment
+  name: helloworld-deployment 
 
 spec:
-  template: # pod defintion
+  template: 
     metadata:
-      name: helloworld # name of the pod
+      name: helloworld 
       labels:
         app: helloworld
         tier: frontend
@@ -15,7 +15,7 @@ spec:
         - name: helloworld
           image: shuchitha/helloworld:latest
   replicas: 3
-  selector: # Mandatory, Select the pods which needs to be in the replicaset
+  selector: 
     matchLabels:
       app: helloworld
       tier: frontend
